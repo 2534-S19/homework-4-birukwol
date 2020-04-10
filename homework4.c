@@ -35,17 +35,18 @@ int main(void){
         // TODO: Check the receive interrupt flag to see if a received character is available.
         //       Return 0xFF if no character is available.
 
-        if (UART_getInterruptStatus (EUSCI_A0_BASE, EUSCI_A_UART_RECEIVE_INTERRUPT_FLAG)== (EUSCI_A_UART_RECEIVE_INTERRUPT_FLAG)){
+        if (UART_getInterruptStatus (EUSCI_A0_BASE, EUSCI_A_UART_RECEIVE_INTERRUPT_FLAG)== (EUSCI_A_UART_RECEIVE_INTERRUPT_FLAG))
+        {
             rChar = UART_receiveData(EUSCI_A0_BASE);
         }
 
-    else{
+    else
         rChar = 0xFF;
-    }
         // TODO: If an actual character was received, echo the character to the terminal AND use it to update the FSM.
         //       Check the transmit interrupt flag prior to transmitting the character.
         //uint32_t status = UART_getInterruptStatus(EUSCI_A0_BASE,EUSCI_A_UART_TRANSMIT_INTERRUPT_FLAG);
-     if(rChar!= 0xFF){
+     if(rChar!= 0xFF)
+     {
 
         if ( UART_getInterruptStatus(EUSCI_A0_BASE,EUSCI_A_UART_TRANSMIT_INTERRUPT_FLAG) == EUSCI_A_UART_TRANSMIT_INTERRUPT_FLAG)
               {
@@ -58,18 +59,18 @@ int main(void){
         //       Check the transmit interrupt flag prior to transmitting each character and moving on to the next one.
         //       Make sure to reset the success variable after transmission.
        if(finished)
-       {
+          {
             int i=0;
            while(response[i] != '\0')
-           {
+            {
             if(UART_getInterruptStatus(EUSCI_A0_BASE,EUSCI_A_UART_TRANSMIT_INTERRUPT_FLAG) == EUSCI_A_UART_TRANSMIT_INTERRUPT_FLAG)
                      {
                         UART_transmitData(EUSCI_A0_BASE, response[i]);
                         i++;
                       }
             }
-       }
-     }
+          }
+      }
     }
 }
 
